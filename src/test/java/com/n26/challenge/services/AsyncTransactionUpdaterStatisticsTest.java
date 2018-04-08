@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWorkerBaseTest {
-    AsyncTransactionUpdaterStatistics asyncTransactionUpdaterStatisticsSamples;
+    AsyncTransactionUpdaterStatistics asyncTransactionUpdaterStatistics;
     @Mock
     private SlidingStatisticsInterface delegate;
 
@@ -24,7 +24,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     @Before
     public void setup()
     {
-        asyncTransactionUpdaterStatisticsSamples =
+        asyncTransactionUpdaterStatistics =
                 new AsyncTransactionUpdaterStatistics(
                         delegate,
                         scheduledExecutorService,
@@ -40,7 +40,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
 
         when(delegate.getStatistics()).thenReturn(statistics);
 
-        Statistics statisticsToTest = asyncTransactionUpdaterStatisticsSamples.getStatistics();
+        Statistics statisticsToTest = asyncTransactionUpdaterStatistics.getStatistics();
 
         assertThat(statisticsToTest, is(equalTo(statistics)));
 
@@ -50,7 +50,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     @Test
     public void shouldSlide()
     {
-        asyncTransactionUpdaterStatisticsSamples.slide();
+        asyncTransactionUpdaterStatistics.slide();
 
         verify(delegate).slide();
     }
@@ -58,7 +58,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     @Test
     public void shouldResetStatistics()
     {
-        asyncTransactionUpdaterStatisticsSamples.resetStatistics();
+        asyncTransactionUpdaterStatistics.resetStatistics();
 
         verify(delegate).resetStatistics();
     }
@@ -73,7 +73,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
         Transaction second = Transaction.forAmount(12);
         Transaction third = Transaction.forAmount(12);
 
-        asyncTransactionUpdaterStatisticsSamples.addTransactions(
+        asyncTransactionUpdaterStatistics.addTransactions(
                 asList(
                         first,
                         second,
@@ -86,7 +86,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
         verify(delegate).addTransaction(second);
         verify(delegate).addTransaction(third);
 
-        asyncTransactionUpdaterStatisticsSamples.destroy();
+        asyncTransactionUpdaterStatistics.destroy();
     }
 
     @Test
@@ -95,13 +95,13 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
         givenARealUpdater();
 
         Transaction first = Transaction.forAmount(12);
-        asyncTransactionUpdaterStatisticsSamples.addTransaction(first);
+        asyncTransactionUpdaterStatistics.addTransaction(first);
 
         Transaction second = Transaction.forAmount(12);
-        asyncTransactionUpdaterStatisticsSamples.addTransaction(second);
+        asyncTransactionUpdaterStatistics.addTransaction(second);
 
         Transaction third = Transaction.forAmount(12);
-        asyncTransactionUpdaterStatisticsSamples.addTransaction(third);
+        asyncTransactionUpdaterStatistics.addTransaction(third);
 
         sleepFor(60l);
 
@@ -109,12 +109,12 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
         verify(delegate).addTransaction(second);
         verify(delegate).addTransaction(third);
 
-        asyncTransactionUpdaterStatisticsSamples.destroy();
+        asyncTransactionUpdaterStatistics.destroy();
     }
 
     private void givenARealUpdater()
     {
-        asyncTransactionUpdaterStatisticsSamples =
+        asyncTransactionUpdaterStatistics =
                 new AsyncTransactionUpdaterStatistics(delegate,
                         Executors
                                 .newScheduledThreadPool(
@@ -123,12 +123,12 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
                         TimeUnit.MILLISECONDS,
                         10);
 
-        asyncTransactionUpdaterStatisticsSamples.init();
+        asyncTransactionUpdaterStatistics.init();
     }
 
     @Override protected SchedulableSingleWorker getInstance()
     {
-        return asyncTransactionUpdaterStatisticsSamples;
+        return asyncTransactionUpdaterStatistics;
     }
 
     @Override protected Class<? extends Runnable> getRunnableClass()

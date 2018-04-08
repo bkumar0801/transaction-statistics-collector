@@ -24,7 +24,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
     private SlidingStatisticsInterface delegate;
 
 
-    AutoSlidingStatistics autoSlidingStatisticsSamples;
+    AutoSlidingStatistics autoSlidingStatistics;
 
     Transaction transaction = new Transaction(1d, null);
     Collection<Transaction> transactions = Collections.singleton(transaction);
@@ -33,7 +33,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
     @Before
     public void setup() {
-        autoSlidingStatisticsSamples = new AutoSlidingStatistics(delegate,
+        autoSlidingStatistics = new AutoSlidingStatistics(delegate,
                 scheduledExecutorService,
                 3,
                 TimeUnit.SECONDS);
@@ -41,19 +41,19 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void slide() {
-        autoSlidingStatisticsSamples.slide();
+        autoSlidingStatistics.slide();
     }
 
     @Test
     public void shouldAddTransaction() {
-        autoSlidingStatisticsSamples.addTransaction(transaction);
+        autoSlidingStatistics.addTransaction(transaction);
 
         verify(delegate).addTransaction(transaction);
     }
 
     @Test
     public void shouldAddTransactions() {
-        autoSlidingStatisticsSamples.addTransactions(transactions);
+        autoSlidingStatistics.addTransactions(transactions);
 
         verify(delegate).addTransactions(transactions);
     }
@@ -61,7 +61,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
     @Test
     public void shouldResetStatistics()
     {
-        autoSlidingStatisticsSamples.resetStatistics();
+        autoSlidingStatistics.resetStatistics();
 
         verify(delegate).resetStatistics();
     }
@@ -72,7 +72,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
         when(delegate.getStatistics()).thenReturn(statistics);
 
-        Statistics statisticsToTest = autoSlidingStatisticsSamples.getStatistics();
+        Statistics statisticsToTest = autoSlidingStatistics.getStatistics();
 
         assertThat(statisticsToTest,is(equalTo(statistics)));
 
@@ -82,24 +82,24 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
     @Test
     public void shouldTestHappyPath() {
-        autoSlidingStatisticsSamples = new AutoSlidingStatistics(delegate,
+        autoSlidingStatistics = new AutoSlidingStatistics(delegate,
                 Executors.newScheduledThreadPool(1),
                 10,
                 TimeUnit.MILLISECONDS);
 
-        autoSlidingStatisticsSamples.init();
+        autoSlidingStatistics.init();
 
         sleepFor(60l);
 
         verify(delegate,atLeast(5)).slide();
 
-        autoSlidingStatisticsSamples.destroy();
+        autoSlidingStatistics.destroy();
     }
 
 
     @Override protected SchedulableSingleWorker getInstance()
     {
-        return autoSlidingStatisticsSamples;
+        return autoSlidingStatistics;
     }
 
     @Override protected Class<? extends Runnable> getRunnableClass()

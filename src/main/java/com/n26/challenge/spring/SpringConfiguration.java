@@ -30,7 +30,7 @@ public class SpringConfiguration
     int transactionUpdaterSize;
 
     @Bean(name = "realSlidingStatisticsSample")
-    public FixedSizeSlidingStatistics fixedSizeSlidingStatisticsSamples()
+    public FixedSizeSlidingStatistics fixedSizeSlidingStatistics()
     {
         return new FixedSizeSlidingStatistics(60);
     }
@@ -43,7 +43,7 @@ public class SpringConfiguration
 
     @Bean(name = "transactionUpdaterStatisticsSamples")
     @Autowired
-    public AsyncTransactionUpdaterStatistics asyncTransactionUpdaterStatisticsSamples(
+    public AsyncTransactionUpdaterStatistics asyncTransactionUpdaterStatistics(
             @Qualifier("realSlidingStatisticsSample") SlidingStatisticsInterface delegate,
             @Qualifier("transactionUpdaterScheduledExecutorService") ScheduledExecutorService executorService)
     {
@@ -62,7 +62,7 @@ public class SpringConfiguration
 
     @Bean(name = "slidingStatisticsInterface")
     @Autowired
-    public AutoSlidingStatistics autoSlidingStatisticsSamples(
+    public AutoSlidingStatistics autoSlidingStatistics(
             @Qualifier("transactionUpdaterStatisticsSamples") SlidingStatisticsInterface delegate,
             @Qualifier("autoSlidingScheduledExecutorService") ScheduledExecutorService executorService)
     {
