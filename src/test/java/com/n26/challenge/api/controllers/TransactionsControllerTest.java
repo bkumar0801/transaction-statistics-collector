@@ -36,7 +36,7 @@ public class TransactionsControllerTest {
     }
 
     @Test
-    public void addTransaction201() {
+    public void shouldAddTransaction201() {
         Event event = new Event();
         event.setAmount(123.45);
         event.setTimestamp(System.currentTimeMillis()/1000);
@@ -57,7 +57,7 @@ public class TransactionsControllerTest {
     }
 
     @Test
-    public void addTransaction204() {
+    public void shouldAddTransaction204() {
         Event event = new Event();
         event.setAmount(123.45);
         event.setTimestamp((System.currentTimeMillis()/1000)-80);

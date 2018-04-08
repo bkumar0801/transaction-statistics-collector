@@ -45,21 +45,21 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
     }
 
     @Test
-    public void addTransaction() {
+    public void shouldAddTransaction() {
         autoSlidingStatisticsSamples.addTransaction(transaction);
 
         verify(delegate).addTransaction(transaction);
     }
 
     @Test
-    public void addTransactions() {
+    public void shouldAddTransactions() {
         autoSlidingStatisticsSamples.addTransactions(transactions);
 
         verify(delegate).addTransactions(transactions);
     }
 
     @Test
-    public void resetStatistics()
+    public void shouldResetStatistics()
     {
         autoSlidingStatisticsSamples.resetStatistics();
 
@@ -68,7 +68,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
 
     @Test
-    public void getStatistics() {
+    public void shouldGetStatistics() {
 
         when(delegate.getStatistics()).thenReturn(statistics);
 
@@ -81,7 +81,7 @@ public class AutoSlidingStatisticsTest extends SchedulableSingleWorkerBaseTest {
 
 
     @Test
-    public void happyPath() {
+    public void shouldTestHappyPath() {
         autoSlidingStatisticsSamples = new AutoSlidingStatistics(delegate,
                 Executors.newScheduledThreadPool(1),
                 10,

@@ -1,12 +1,7 @@
 package com.n26.challenge.services;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,15 +12,6 @@ public class UnixEpochTest {
         UnixEpoch now = new UnixEpoch();
         long distance = System.currentTimeMillis() - now.getAsDate().getTime();
         assertThat("Distance is " + distance, distance < 1500, is(true));
-    }
-
-    @Test
-    @Ignore
-    public void fromAValue()
-    {
-        UnixEpoch unixEpoch = new UnixEpoch(1496264307);
-        Calendar calendar = new GregorianCalendar(2017, 4, 31, 22, 58, 27);
-        assertThat(calendar.getTime(), is(equalTo(unixEpoch.getAsDate())));
     }
 
     @Test
@@ -52,45 +38,6 @@ public class UnixEpochTest {
 
         assertThat(other.after(unixEpoch), is(false));
 
-    }
-
-    @Test
-    @Ignore
-    public void addPlus5()
-    {
-        UnixEpoch unixEpoch = new UnixEpoch(1496312086);
-
-        UnixEpoch epochPlus5Seconds = unixEpoch.add(5);
-
-        assertThat(epochPlus5Seconds.getEpoch(), is(equalTo(1496312091l)));
-
-        assertThat(
-                new GregorianCalendar(2017,
-                        5,
-                        1,
-                        12,
-                        14,
-                        46).getTime(),
-                is(
-                        equalTo(
-                                unixEpoch.getAsDate()
-                        )
-                )
-        );
-
-        assertThat(
-                new GregorianCalendar(2017,
-                        5,
-                        1,
-                        12,
-                        14,
-                        51).getTime(),
-                is(
-                        equalTo(
-                                epochPlus5Seconds.getAsDate()
-                        )
-                )
-        );
     }
 
     @Test
@@ -127,44 +74,4 @@ public class UnixEpochTest {
         assertThat(unixEpoch.isBeforeThan(6), is(false));
 
     }
-
-    @Test
-    @Ignore
-    public void addMinus8()
-    {
-        UnixEpoch unixEpoch = new UnixEpoch(1496312086);
-
-        UnixEpoch epochMinus8Seconds = unixEpoch.add(-8);
-
-        assertThat(epochMinus8Seconds.getEpoch(), is(equalTo(1496312078l)));
-
-        assertThat(
-                new GregorianCalendar(2017,
-                        5,
-                        1,
-                        12,
-                        14,
-                        46).getTime(),
-                is(
-                        equalTo(
-                                unixEpoch.getAsDate()
-                        )
-                )
-        );
-
-        assertThat(
-                new GregorianCalendar(2017,
-                        5,
-                        1,
-                        12,
-                        14,
-                        38).getTime(),
-                is(
-                        equalTo(
-                                epochMinus8Seconds.getAsDate()
-                        )
-                )
-        );
-    }
-
 }

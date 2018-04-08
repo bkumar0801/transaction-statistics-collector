@@ -35,7 +35,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     }
 
     @Test
-    public void getStatistics()
+    public void shouldGetStatistics()
     {
 
         when(delegate.getStatistics()).thenReturn(statistics);
@@ -48,7 +48,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     }
 
     @Test
-    public void slide()
+    public void shouldSlide()
     {
         asyncTransactionUpdaterStatisticsSamples.slide();
 
@@ -56,7 +56,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     }
 
     @Test
-    public void resetStatistics()
+    public void shouldResetStatistics()
     {
         asyncTransactionUpdaterStatisticsSamples.resetStatistics();
 
@@ -65,7 +65,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
 
 
     @Test
-    public void addTransaction()
+    public void shouldAddTransaction()
     {
         givenARealUpdater();
 
@@ -90,7 +90,7 @@ public class AsyncTransactionUpdaterStatisticsTest extends SchedulableSingleWork
     }
 
     @Test
-    public void addTransactions()
+    public void shouldAddTransactions()
     {
         givenARealUpdater();
 
