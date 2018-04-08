@@ -17,12 +17,12 @@ public class TransactionsController
 
     Logger logger = LoggerFactory.getLogger(TransactionsController.class);
 
-    private final SlidingStatisticsInterface slidingStatisticsSamples;
+    private final SlidingStatisticsInterface slidingStatisticsInterface;
 
     @Autowired
-    public TransactionsController(@Qualifier("slidingStatisticsSamples") SlidingStatisticsInterface slidingStatisticsSamples)
+    public TransactionsController(@Qualifier("slidingStatisticsInterface") SlidingStatisticsInterface slidingStatisticsInterface)
     {
-        this.slidingStatisticsSamples = slidingStatisticsSamples;
+        this.slidingStatisticsInterface = slidingStatisticsInterface;
     }
 
     @RequestMapping(path = "/transactions", method = RequestMethod.POST)
@@ -32,7 +32,7 @@ public class TransactionsController
 
         logger.info("Received event {}", event);
 
-        slidingStatisticsSamples.addTransaction(
+        slidingStatisticsInterface.addTransaction(
                 Transaction.of(
                         event.getAmount(),
                         event.getTimestamp()

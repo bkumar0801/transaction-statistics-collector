@@ -17,18 +17,18 @@ public class StatisticsController
 {
     Logger logger = LoggerFactory.getLogger(TransactionsController.class);
 
-    private final SlidingStatisticsInterface slidingStatisticsSamples;
+    private final SlidingStatisticsInterface slidingStatisticsInterface;
 
     @Autowired
-    public StatisticsController(@Qualifier("slidingStatisticsSamples") SlidingStatisticsInterface slidingStatisticsSamples)
+    public StatisticsController(@Qualifier("slidingStatisticsInterface") SlidingStatisticsInterface slidingStatisticsInterface)
     {
-        this.slidingStatisticsSamples = slidingStatisticsSamples;
+        this.slidingStatisticsInterface = slidingStatisticsInterface;
     }
 
     @RequestMapping(path = "/statistics", method = RequestMethod.GET)
     public Statistics getStatistics()
     {
-        com.n26.challenge.services.Statistics domainStatistics = slidingStatisticsSamples
+        com.n26.challenge.services.Statistics domainStatistics = slidingStatisticsInterface
                 .getStatistics();
 
         Statistics statistics = new Statistics(domainStatistics.getSum(),
@@ -44,7 +44,7 @@ public class StatisticsController
     @ResponseStatus(HttpStatus.OK)
     public void clearStatistics()
     {
-        slidingStatisticsSamples.resetStatistics();
+        slidingStatisticsInterface.resetStatistics();
     }
 
 }

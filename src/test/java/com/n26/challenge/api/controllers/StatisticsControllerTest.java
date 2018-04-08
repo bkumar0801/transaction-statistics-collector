@@ -23,8 +23,8 @@ public class StatisticsControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    @Qualifier("slidingStatisticsSamples")
-    private SlidingStatisticsInterface slidingStatisticsSamples;
+    @Qualifier("slidingStatisticsInterface")
+    private SlidingStatisticsInterface slidingStatisticsInterface;
 
     @Test
     public void shouldTestEmptyStatistics()
@@ -42,9 +42,9 @@ public class StatisticsControllerTest {
     public void shouldTestStatisticsAfterSomeTransactions()
     {
 
-        slidingStatisticsSamples.addTransaction(Transaction.forAmount(123.12));
-        slidingStatisticsSamples.addTransaction(Transaction.forAmount(23.00));
-        slidingStatisticsSamples.addTransaction(Transaction.forAmount(523.12));
+        slidingStatisticsInterface.addTransaction(Transaction.forAmount(123.12));
+        slidingStatisticsInterface.addTransaction(Transaction.forAmount(23.00));
+        slidingStatisticsInterface.addTransaction(Transaction.forAmount(523.12));
 
         sleepFor(150);
 

@@ -60,7 +60,7 @@ public class SpringConfiguration
         return Executors.newScheduledThreadPool(1, r -> new Thread(r, "SamplesSlider"));
     }
 
-    @Bean(name = "slidingStatisticsSamples")
+    @Bean(name = "slidingStatisticsInterface")
     @Autowired
     public AutoSlidingStatistics autoSlidingStatisticsSamples(
             @Qualifier("transactionUpdaterStatisticsSamples") SlidingStatisticsInterface delegate,

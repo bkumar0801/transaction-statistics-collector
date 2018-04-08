@@ -27,12 +27,12 @@ public class TransactionsControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    @Qualifier("slidingStatisticsSamples")
-    private SlidingStatisticsInterface slidingStatisticsSamples;
+    @Qualifier("slidingStatisticsInterface")
+    private SlidingStatisticsInterface slidingStatisticsInterface;
 
     @Before
     public void setup() {
-        slidingStatisticsSamples.resetStatistics();
+        slidingStatisticsInterface.resetStatistics();
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TransactionsControllerTest {
 
         sleepFor(50);
 
-        Statistics statistics = slidingStatisticsSamples.getStatistics();
+        Statistics statistics = slidingStatisticsInterface.getStatistics();
 
         assertThat(statistics, Matchers.is(notNullValue()));
         assertThat(statistics.getCount(), Matchers.is(1));
